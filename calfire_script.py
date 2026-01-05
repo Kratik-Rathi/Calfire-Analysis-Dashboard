@@ -10,7 +10,7 @@ import os
 # =====================
 SERVICE_ACCOUNT_FILE = os.path.join(os.path.dirname(__file__), "credentials.json")
 SPREADSHEET_ID = "Spread Sheet ID"
-SHEET_NAME = "Sheet Nane"
+SHEET_NAME = "Sheet Name"
 API_URL = "Cal-fire API URL"
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 
