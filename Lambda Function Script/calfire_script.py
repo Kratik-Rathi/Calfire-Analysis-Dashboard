@@ -11,7 +11,7 @@ import os
 SERVICE_ACCOUNT_FILE = os.path.join(os.path.dirname(__file__), "credentials.json")
 SPREADSHEET_ID = "Spread Sheet ID"
 SHEET_NAME = "Sheet Name"
-API_URL = "Cal-fire API URL"
+BASE_API_URL = "Cal-fire API URL"
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 
 ID_COL = "incident_id"
@@ -48,12 +48,44 @@ def get_sheet_id(spreadsheets, spreadsheet_id: str, sheet_name: str) -> int:
 # API LOAD
 # =====================
 def get_api_data() -> pd.DataFrame:
-    resp = SESSION.get(API_URL, timeout=30)
-    resp.raise_for_status()
-    raw = resp.json()
-    records = [f["properties"] for f in raw["features"]]
+    current_year = datetime.datetime.now().year
 
+    def fetch(year: int):
+        """Fetch raw JSON for a given year, including inactive incidents."""
+        url = f"{BASE_API_URL}?year={year}&inactive=true"
+        print(f"Fetching CAL FIRE data from: {url}")
+        resp = SESSION.get(url, timeout=30)
+        resp.raise_for_status()
+        return resp.json()
+
+    # Try current year
+    try:
+        data = fetch(current_year)
+    except Exception as e:
+        # This is a real error (network, 5xx, bad JSON) → let it bubble up
+        # so your __main__ / lambda_handler can return 500.
+        print(f"Error fetching data for year {current_year}: {e}")
+        raise
+
+    features = data.get("features", []) if isinstance(data, dict) else []
+    if not features:
+        print(f"No incidents found for {current_year}, trying {current_year - 1}...")
+        try:
+            data = fetch(current_year - 1)
+            features = data.get("features", []) if isinstance(data, dict) else []
+        except Exception as e:
+            print(f"Error fetching data for year {current_year - 1}: {e}")
+            # Propagate, same logic: this is a real failure, not "no data"
+            raise
+
+        if not features:
+            print("No incidents found for current or previous year. Returning empty DataFrame.")
+            return pd.DataFrame()
+
+    # We have some features → normalize to DataFrame
+    records = [f.get("properties", {}) for f in features]
     df = pd.json_normalize(records)
+
     df = df.rename(
         columns={
             "Name": "incident_name",
@@ -81,8 +113,8 @@ def get_api_data() -> pd.DataFrame:
             "NotificationDesired": "notification_desired",
         }
     )
-    return df
 
+    return df
 
 # =====================
 # HELPERS
