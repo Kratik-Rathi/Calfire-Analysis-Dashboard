@@ -16,8 +16,6 @@ The dashboard enables:
 
 The Tableau dashboard is structured into two major analytical surfaces:
 
----
-
 ### **1️⃣ Analysis Page**
 
 **KPI Cards**
