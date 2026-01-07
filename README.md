@@ -65,7 +65,7 @@ Wildfire data is inherently dynamic. Containment evolves, total acres burned cha
 ## 🗂️ Repository Structure
 
 ```
-california-wildfire-analytics/
+Calfire-Analysis-Dashboard/
 │
 ├── README.md
 │
