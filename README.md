@@ -46,8 +46,6 @@ The Tableau dashboard is structured into two major analytical surfaces:
 
 Wildfire data is inherently dynamic. Containment evolves, total acres burned changes, and incidents transition through states. To address this reality, I designed a **production-style automated ETL pipeline backed by AWS + GCP**, ensuring the dashboard stays continuously updated without manual intervention.
 
----
-
 ## 🧭 Data Flow Summary
 
 | Component | Responsibility |
