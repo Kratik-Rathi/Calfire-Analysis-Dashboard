@@ -1,5 +1,5 @@
 
-# 🚨 California Wildfires Real-Time Analytics Dashboard (2017–2026)
+# 🚨 California Wildfires Real-Time Analytics Dashboard (2017–2025)
 
 This project delivers a **fully automated real-time wildfire analytics solution** for California, covering the last decade of activity (2017–2025). The goal was to move beyond static analysis and instead build a continuously updating BI system capable of reflecting evolving wildfire behavior, containment progress, and geographic spread — while maintaining historical reliability.
 
@@ -66,31 +66,6 @@ Wildfire data is inherently dynamic. Containment evolves, total acres burned cha
 | **Tableau Public** | Visualization & stakeholder consumption |
 
 ---
-
-## 📐 Architecture Diagram
-
-```mermaid
-flowchart LR
-
-A[CAL FIRE Public API] --> B[Amazon EventBridge - Scheduled Trigger]
-
-B --> C[AWS Lambda (ETL Processor)]
-C -->|Schema Standardization| C
-C -->|Data Quality & Aggregation| C
-C -->|Historical Record Updates| C
-
-C --> D[(Amazon S3 - Package Storage)]
-D --> C
-
-C --> E[Google Sheets - Analytics Dataset]
-
-E --> F[Tableau Dashboard]
-F -->|Analysis View|
-F -->|Metadata View|
-```
-
----
-
 ## 🗂️ Repository Structure
 
 ```
