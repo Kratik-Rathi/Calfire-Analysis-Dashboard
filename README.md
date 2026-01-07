@@ -33,8 +33,6 @@ The Tableau dashboard is structured into two major analytical surfaces:
 - Burned acres visualization across California  
 - Helps identify consistently vulnerable regions  
 
----
-
 ### **2️⃣ Metadata Page**
 - Provides visibility into the source dataset  
 - Exposes key attributes including:
