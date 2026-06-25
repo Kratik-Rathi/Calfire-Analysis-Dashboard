@@ -1,6 +1,7 @@
 # 🚨 California Wildfires Real-Time Analytics Dashboard (2017–present):
 
 Dashboard Link: https://public.tableau.com/app/profile/kratik.rathi/viz/CalfireLiveDashboard/CalfireAnalysis
+
 This project delivers a **fully automated real-time wildfire analytics solution** for California, covering the last decade of activity (2017–presetn). The goal was to move beyond static analysis and instead build a continuously updating BI system capable of reflecting evolving wildfire behavior, containment progress, and geographic spread — while maintaining historical reliability.
 
 The dashboard enables:
